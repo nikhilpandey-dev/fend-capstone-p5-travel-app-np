@@ -1,0 +1,12 @@
+{
+  "name": "fend-capstone-p5-travel-app-np",
+  "version": "1.0.0",
+  "description": "Capstone project of Udacity Front End Nanodegree. It's a travel app incorporating all the learnings of the course till date:\n1. Front End Design\n2. DOM Manipulation\n3. Node, Express & AsyncJS\n4. Webpack Configuration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
