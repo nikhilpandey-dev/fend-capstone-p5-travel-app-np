@@ -1,0 +1,291 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Petemoss&display=swap");
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Poppins:wght@500&display=swap");
+:root {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+*,
+::before,
+::after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+
+body {
+  background-color: #f5d25d;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-color: #1a4314;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+.heading {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 1em;
+}
+
+p {
+  line-height: 1.25;
+}
+
+header .heading {
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+  text-align: center;
+}
+
+.main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: (auto)[2];
+      grid-template-rows: repeat(2, auto);
+  margin: 0 auto;
+  gap: 1.5em;
+}
+
+.main .container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: (auto)[3];
+      grid-template-rows: repeat(3, auto);
+  margin: 1em;
+  gap: 1.5em;
+}
+
+.main .container .hero {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main .container .hero .hero-img {
+  max-width: 100%;
+  max-height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 2px dashed #f5d25d;
+}
+
+.main .container .tile {
+  display: block;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1 /2;
+  grid-row: span 1;
+  border: 2px dashed #f5d25d;
+}
+
+.main .container .tile .travel-form {
+  max-width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0 2em;
+}
+
+.main .container .tile .travel-form input:not([type="checkbox"]):not([type="radio"]),
+.main .container .tile .travel-form label {
+  display: block;
+  padding: 0.5em;
+  width: 100%;
+}
+
+.main .container .tile .travel-form .cta-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main .container .tile .travel-form .cta-button {
+  margin-top: 1em;
+  border: 1px solid #e4a099;
+  background-color: #fff;
+  color: #1a4314;
+  padding: 1em;
+  cursor: pointer;
+}
+
+.main .all-trips {
+  border: 2px dashed #f5d25d;
+  margin: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 1.5em;
+  padding: 0 2em;
+}
+
+.main .all-trips details {
+  margin-left: 0em;
+}
+
+.tile * + * {
+  margin-top: 1em;
+}
+
+.sidebar-bottom {
+  border: 2px dashed #f5d25d;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0 2em;
+}
+
+@media (min-width: 768px) {
+  .heading {
+    text-align: center;
+  }
+  .main {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: (auto)[2];
+        grid-template-rows: repeat(2, auto);
+    margin: 0 auto;
+    gap: 1.5em;
+    margin: 0 auto;
+  }
+  .main .container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 2fr 3fr;
+        grid-template-columns: 2fr 3fr;
+    -ms-grid-rows: (auto)[2];
+        grid-template-rows: repeat(2, auto);
+    gap: 1em;
+  }
+  .main .container .hero {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / 2;
+    grid-row: span 2;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .main .container .hero .hero-img {
+    max-width: 100%;
+    max-height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border: 2px dashed #f5d25d;
+  }
+  .main .container .sidebar-top {
+    display: block;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/ 3;
+    grid-row: span 1;
+    margin-top: 0;
+  }
+  .main .container .tile {
+    display: block;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2 / 3;
+    grid-row: span 1;
+    border: 2px dashed #f5d25d;
+  }
+  .main .container .tile .travel-form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin: 0 2.5em;
+  }
+  .main .container .tile .travel-form input:not([type="checkbox"]):not([type="radio"]),
+  .main .container .tile .travel-form label {
+    display: block;
+    padding: 0.5em;
+    width: 100%;
+  }
+  .main .container .tile .travel-form .cta-buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .main .container .tile .travel-form .cta-button {
+    margin-top: 1em;
+    border: 1px solid #e4a099;
+    background-color: #fff;
+    color: #1a4314;
+    padding: 1em;
+    cursor: pointer;
+  }
+  .main .container .tile .sidebar-bottom {
+    display: block;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/ 3;
+    grid-row: span 1;
+    border: 2px dashed #f5d25d;
+  }
+  .main .all-trips {
+    border: 2px dashed #f5d25d;
+    margin: 1em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    gap: 1.5em;
+  }
+  .main .all-trips details {
+    margin-left: 1em;
+  }
+}
+/*# sourceMappingURL=style.css.map */

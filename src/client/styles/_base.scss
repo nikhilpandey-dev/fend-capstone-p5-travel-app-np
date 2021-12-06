@@ -1,0 +1,16 @@
+@import 'variables';
+$book-color: #709b90;
+:root {
+    box-sizing: border-box;
+  }
+  
+  *,
+  ::before,
+  ::after {
+    box-sizing: inherit;
+  }
+  
+  body {
+    background-color: $accent-color2;
+    font-family: Helvetica, Arial, sans-serif;
+  }
