@@ -11,7 +11,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].js',
-        assetModuleFilename: "images/[name][ext]",
+        assetModuleFilename: "asset/images/[name][ext]",
         clean: true
     },
     stats: 'normal',
