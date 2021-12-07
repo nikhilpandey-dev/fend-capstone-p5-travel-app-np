@@ -1,5 +1,6 @@
-// import mainImage from 'src/assets/images';
+import mainImage from '/src//assets/images/cafe-6553202.jpeg'
 alert("I exist!");
 
+
 const img = document.getElementsByClassName("hero-img");
-img.src = "/src/assets/images/avenue-815297.jpeg";
+img.src = mainImage;

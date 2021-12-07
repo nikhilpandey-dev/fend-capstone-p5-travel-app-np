@@ -9,24 +9,28 @@ module.exports = {
         main: './src/client/index.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, './dist'),
         filename: '[name].js',
+        assetModuleFilename: "images/[name][ext]",
         clean: true
     },
     stats: 'normal',
     module: {
         rules: [
             {
-                test: /\.(svg|ico|png|webp|jpg|gif|jpeg)$/i,
-                type: "asset/resource"
-
-            },
-            {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: "babel-loader"
+                use: ['babel-loader'],
+            },
+            {
+                test: /\.(svg|ico|png|webp|jpg|gif|jpeg)$/i,
+                type: "asset/resource",
+            },
+            {
+                test: /\.html$/,
+                use: ['html-loader']
             }
-        ]
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
