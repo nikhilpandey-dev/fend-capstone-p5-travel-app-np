@@ -10,7 +10,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].js',
+        filename: '[name].[contentHash].js',
         assetModuleFilename: "asset/images/[name][ext]",
         clean: true
     },
@@ -29,6 +29,10 @@ module.exports = {
             {
                 test: /\.html$/,
                 use: ['html-loader']
+            },
+            {
+                test: /\.scss$/,
+                use: ["style-loader", "css-loader", "sass-loader"],
             }
         ],
     },
