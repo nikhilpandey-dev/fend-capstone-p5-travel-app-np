@@ -1,36 +1,27 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const common = require('./webpack.common');
+const {merge} = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
 
-module.exports = {
+module.exports = merge(common, {
     mode: 'production',
     devtool: 'source-map',
-    entry: {
-        main: './src/client/index.js'
-    },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name]-[contenthash].js',
-        assetModuleFilename: "static/[name]-[contenthash][ext]",
+        filename: '[name].[contenthash].js',
+        assetModuleFilename: "static/[name].[contenthash][ext]",
         clean: true
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [new TerserPlugin(), new CSSMinimizerWebpackPlugin()]
     },
     stats: 'normal',
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: ['babel-loader'],
-            },
-            {
-                test: /\.(svg|ico|png|webp|jpg|gif|jpeg)$/i,
-                type: "asset/resource",
-            },
-            {
-                test: /\.html$/,
-                use: ['html-loader']
-            },
 
             {
                 test: /\.scss$/,
@@ -39,13 +30,9 @@ module.exports = {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: "./src/client/views/index.html",
-            filename: "./index.html"
-        }),
         new MiniCSSExtractPlugin({
-            filename: '[name]-[contenthash].css'
+            filename: '[name].[contenthash].css'
         })
     ]
-}
+});
 
