@@ -8,3 +8,16 @@
 1. Start building other APIs.
 1. Incorporate Webpack into your project
 1. Incorporate jest testing into your project
+
+http://api.geonames.org/searchJSON?name_startsWith=new%20delhi&maxRows=2&username=nikhilpandey4
+
+http://api.geonames.org/searchJSON?q=new%20york&maxRows=2&username=nikhilpandey4
+
+http://api.geonames.org/searchJSON?q=gorakhpur&maxRows=1&username=nikhilpandey4
+
+
+mirzapur%20india
+
+http://api.geonames.org/searchJSON?q=mirzapur&maxRows=1&username=nikhilpandey4
+
+http://api.geonames.org/searchJSON?q=mirzapur%20india&maxRows=1&username=nikhilpandey4

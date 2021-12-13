@@ -1,2 +1,2 @@
 import './styles/style.scss';
-console.log('Hurray, did image loading!');
+console.log('Hurray, we made image loading!');
