@@ -5,16 +5,8 @@ function handleSubmit(event) {
     console.log(travelPlace);
     postData('/travelPlace', { travelPlace: travelPlace })
         .then(function (data) {
-            console.log('The data returned is: ');
-            console.log(data);
-            alert(data.details);
-            const d = new Date(data.currentWeatherData.valid_date);
-            const month = d.toLocaleString('default', { month: 'long' })
-            let newDate = d.getDate()+'.'+ month + '.' + d.getFullYear();
-            var outStr = `The place you entered is: ${data.geonames[0].name}.\nThe country code is: ${data.geonames[0].countryCode}.\nThe country name is: ${data.geonames[0].countryName}.\nThe latitude of the place is: ${data.geonames[0].lat}\nThe longitude of the place is: ${data.geonames[0].lng}.\nThe temperature is: ${data.currentWeatherData.temp}.\nThe date of the weather forecast is: ${newDate}.`
-            // alert(outStr);
-            document.querySelector('.upcoming-trip-details').textContent = outStr;
-            
+            updateUI(data);
+
         })
 }
 
@@ -42,6 +34,27 @@ async function postData(url = '', data = {}) {
 function init() {
     const button = document.getElementById('submit');
     button.addEventListener('click', handleSubmit);
+
+}
+
+function updateUI(data) {
+    const d = new Date(data.currentWeatherData.valid_date);
+    const month = d.toLocaleString('default', { month: 'long' })
+    let newDate = d.getDate() + '.' + month + '.' + d.getFullYear();
+    var outStr = `The place you entered is: ${data.geonames[0].name}.\nThe country code is: ${data.geonames[0].countryCode}.\nThe country name is: ${data.geonames[0].countryName}.\nThe latitude of the place is: ${data.geonames[0].lat}\nThe longitude of the place is: ${data.geonames[0].lng}.\nThe temperature is: ${data.currentWeatherData.temp}.\nThe date of the weather forecast is: ${newDate}.`
+    // alert(outStr);
+    document.querySelector('.upcoming-trip-details').textContent = outStr;
+    const myTrips = document.getElementById('all-trips-details');
+    const details = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = `Yout trip to ${data.geonames[0].name}`;
+    details.append(summary);
+    const paragraph = document.createElement('p');
+    paragraph.textContent = outStr;
+    details.append(paragraph);
+    details.classList.add("all-trips");
+    myTrips.append(details);
+    const p = document.createElement('p');
 
 }
 
