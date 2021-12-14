@@ -63,7 +63,6 @@ function updateUI(data) {
     details.classList.add("all-trips");
     myTrips.prepend(details);
     const p = document.createElement('p');
-
 }
 
 function getDate() {
