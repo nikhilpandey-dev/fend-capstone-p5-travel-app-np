@@ -1,5 +1,5 @@
 
-import "regenerator-runtime/runtime";
+// import "regenerator-runtime/runtime";
 const request = require('supertest');
 const app = require('../src/server/server');
 const greetings = {message: "Welcome to the testing!"};
