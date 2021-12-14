@@ -52,7 +52,7 @@ function createGeonameURL(place) {
     // const travelPlace = encodeURIComponent(place);
     console.log('Travel place is: ', place);
     const username = process.env.GEONAME_USERNAME;
-    const url = `http://api.geonames.org/searchJSON?q=`+place+`&maxRows=1&username=${username}`
+    const url = `http://api.geonames.org/searchJSON?q=` + place + `&maxRows=1&username=${username}`
     return url;
 }
 
@@ -66,6 +66,18 @@ function getWeatherBitDataURL(lat, lon) {
     const url = `${baseURL}${latitude}${longitude}${key}`
     return url;
 }
+
+function getPixabayURL(place) {
+    /* https://pixabay.com/api/?key=11939242-5bfa1b14a150d9bbe59801836&q=yellow+flowers&image_type=photo */
+    const baseURL = `https://pixabay.com/api/?`;
+    const apiKey = process.env.PIXABAY_API_KEY;
+    const key = `key=${apiKey}`;
+    const searchItem = `&q=${place}`
+    const imageType = `&image_type=photo`;
+    const url = `${baseURL}${key}${searchItem}${imageType}`;
+    return url;
+
+}
 let travelPlaceData = {};
 async function getTravelPlace(req, res) {
     console.log('The data code send by you is: ');
@@ -74,10 +86,10 @@ async function getTravelPlace(req, res) {
         const travelPlace = req.body.travelPlace;
         const url = createGeonameURL(travelPlace);
         const response = await axios.get(url);
-        
+
         travelPlaceData = {
             details: response.data.totalResultsCount,
-            geonames: response.data.geonames
+            geonames: response.data.geonames,
         }
         console.log("Geonames data is:\n", travelPlaceData.geonames);
         const lat = travelPlaceData.geonames[0].lat;
@@ -88,12 +100,25 @@ async function getTravelPlace(req, res) {
         const date = new Date(weatherBitResponse.data.data[0].valid_date);
         console.log("Date is:", date);
         travelPlaceData['currentWeatherData'] = weatherBitResponse.data.data[0];
+        let pixabayURL = getPixabayURL(travelPlace);
+    let pixabayImages = await axios.get(pixabayURL);
+    console.log("Pixa bay images are: ", pixabayImages.data.hits[0]);
+
+    if ((pixabayImages.data.hits[0] == null) || (pixabayImages.data.hits[0] == undefined)) {
+        const country = travelPlaceData.geonames[0].countryName;
+        pixabayURL = getPixabayURL(country);
+        pixabayImages = await axios.get(pixabayURL);
+        travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
+        travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
+    } else {
+        travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
+
+    }
         res.send(travelPlaceData);
 
     } catch (error) {
         console.log("Error: ", error);
     }
 }
-
 
 app.post('/travelPlace', getTravelPlace);

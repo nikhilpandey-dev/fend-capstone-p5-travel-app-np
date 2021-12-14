@@ -41,6 +41,8 @@ function updateUI(data) {
     const d = new Date(data.currentWeatherData.valid_date);
     const month = d.toLocaleString('default', { month: 'long' })
     let newDate = d.getDate() + '.' + month + '.' + d.getFullYear();
+    const heroImage = document.getElementById('main-img');
+    heroImage.src = data.pixabayImage;
     var outStr = `The place you entered is: ${data.geonames[0].name}.\nThe country code is: ${data.geonames[0].countryCode}.\nThe country name is: ${data.geonames[0].countryName}.\nThe latitude of the place is: ${data.geonames[0].lat}\nThe longitude of the place is: ${data.geonames[0].lng}.\nThe temperature is: ${data.currentWeatherData.temp}.\nThe date of the weather forecast is: ${newDate}.`
     // alert(outStr);
     document.querySelector('.upcoming-trip-details').textContent = outStr;
@@ -53,10 +55,22 @@ function updateUI(data) {
     paragraph.textContent = outStr;
     details.append(paragraph);
     details.classList.add("all-trips");
-    myTrips.append(details);
+    myTrips.prepend(details);
     const p = document.createElement('p');
 
 }
 
-export { handleSubmit, postData, init }
+function getDate() {
+    let dateEntered = new Date()
+    const datePicker = document.getElementById('travel-date');
+    datePicker.addEventListener('change', function () {
+        let input = this.value;
+        dateEntered = new Date(input);
+        console.log(input); //e.g. 2015-11-13
+        console.log(dateEntered);
+    })
+    return dateEntered;
+}
+
+export { handleSubmit, postData, init, getDate }
 
