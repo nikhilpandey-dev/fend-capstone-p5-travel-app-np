@@ -76,7 +76,9 @@ function removeTrip(event) {
     event.preventDefault();
     const removeTripButton = document.getElementById('reset');
     const myTrips = document.getElementById('all-trips-details');
+    const text = 'Sorry no recent trips';
     removeTripButton.addEventListener('click', function(){
+        document.querySelector('.upcoming-trip-details').textContent = '';
         myTrips.firstElementChild.remove();
     })
 
