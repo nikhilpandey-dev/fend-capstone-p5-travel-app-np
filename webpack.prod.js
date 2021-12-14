@@ -5,7 +5,7 @@ const {merge} = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
-
+const WorkboxPlugin = require('workbox-webpack-plugin');
 module.exports = merge(common, {
     mode: 'production',
     devtool: 'source-map',
@@ -32,7 +32,8 @@ module.exports = merge(common, {
     plugins: [
         new MiniCSSExtractPlugin({
             filename: '[name].[contenthash].css'
-        })
+        }),
+        new WorkboxPlugin.GenerateSW()
     ]
 });
 
