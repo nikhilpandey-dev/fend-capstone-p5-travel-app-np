@@ -1,5 +1,5 @@
-import {handleSubmit} from '../src/client/js/app'
-import {init} from '../src/client/js/app'
+import { handleSubmit } from '../src/client/js/app'
+import { init } from '../src/client/js/app'
 
 // Checking if a valid handleSubmit Function exists
 test('handleSubmit function exists', () => {

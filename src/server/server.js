@@ -37,14 +37,19 @@ app.listen(port, function () {
     console.log(process.env.GEONAME_USERNAME);
 })
 
-/*
-    Console logs
- */
+// /*
+//     Console logs
+//  */
 
-console.log("Geoname username:", process.env.GEONAME_USERNAME);
-console.log("Weatherbit API:", process.env.WEATHERBIT_API_KEY);
+// console.log("Geoname username:", process.env.GEONAME_USERNAME);
+// console.log("Weatherbit API:", process.env.WEATHERBIT_API_KEY);
 /* 
     Helper Functions
+    These helper functions have been designed to generate URL to get data from
+        1. Geonames
+        2. Weatherbit, and
+        3. PixaBay APIs.
+        Also I've used `getDateDiff` function to return the difference in days between the current date and the travel date.
  */
 function createGeonameURL(place) {
     // http://api.geonames.org/searchJSON?q=gorakhpur&maxRows=10&username=nikhilpandey4
@@ -89,7 +94,7 @@ function getDateDiff(futureDate) {
     console.log('Future date is: ');
     console.log(date2);
     const diffTime = Math.abs(date2 - date1);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     console.log(diffDays + " days");
     return diffDays;
 }
@@ -103,6 +108,7 @@ async function getTravelPlace(req, res) {
     console.log("Date diff is");
     const date_diff = getDateDiff(fut_dat);
     try {
+        // 1. Get geonames API data, mainly latitude and longitude
         const travelPlace = req.body.travelPlace;
         const url = createGeonameURL(travelPlace);
         const response = await axios.get(url);
@@ -112,35 +118,36 @@ async function getTravelPlace(req, res) {
             geonames: response.data.geonames,
             travelDaysAhead: date_diff
         }
-        // console.log("Geonames data is:\n", travelPlaceData.geonames);
         const lat = travelPlaceData.geonames[0].lat;
         const lon = travelPlaceData.geonames[0].lng
+        // 2. Get weather data from weatherbit API
         const weatherBitURL = getWeatherBitDataURL(lat, lon);
         const weatherBitResponse = await axios.get(weatherBitURL);
         // console.log("Weather bit data for the current date is: ", weatherBitResponse.data.data[0]);
+        // Get weatherbit API data
         const date = new Date(weatherBitResponse.data.data[0].valid_date);
         // console.log("Date is:", date);
         travelPlaceData['currentWeatherData'] = weatherBitResponse.data.data[0];
+        //  Get image URL from pixabay
         let pixabayURL = getPixabayURL(travelPlace);
-    let pixabayImages = await axios.get(pixabayURL);
-    // console.log("Pixa bay images are: ", pixabayImages.data.hits[0]);
+        let pixabayImages = await axios.get(pixabayURL);
+        // console.log("Pixa bay images are: ", pixabayImages.data.hits[0]);
+        // Check if Pixabay returns a non null and defined details
+        if ((pixabayImages.data.hits[0] == null) || (pixabayImages.data.hits[0] == undefined)) {
+            const country = travelPlaceData.geonames[0].countryName;
+            pixabayURL = getPixabayURL(country);
+            pixabayImages = await axios.get(pixabayURL);
+            travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
+            travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
+        } else {
+            travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
 
-    if ((pixabayImages.data.hits[0] == null) || (pixabayImages.data.hits[0] == undefined)) {
-        const country = travelPlaceData.geonames[0].countryName;
-        pixabayURL = getPixabayURL(country);
-        pixabayImages = await axios.get(pixabayURL);
-        travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
-        travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
-    } else {
-        travelPlaceData["pixabayImage"] = pixabayImages.data.hits[0].webformatURL
-
-    }
+        }
         res.send(travelPlaceData);
 
     } catch (error) {
         console.log("Error: ", error);
     }
 }
-
 app.post('/travelPlace', getTravelPlace);
 
