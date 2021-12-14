@@ -151,3 +151,14 @@ async function getTravelPlace(req, res) {
 }
 app.post('/travelPlace', getTravelPlace);
 
+// Create test path for testing the routes
+const greetings = {message: "Welcome to the testing!"};
+function testing(req, res) {
+    return res.json(greetings);
+}
+app.get('/test', testing)
+
+
+
+// Exporting app for it to be available in the __tests__ module
+module.exports = app;
