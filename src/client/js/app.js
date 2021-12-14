@@ -1,9 +1,11 @@
+let travelDatePicker = new Date()
 function handleSubmit(event) {
     event.preventDefault();
     let travelPlace = document.getElementById('place').value;
     travelPlace = encodeURI(travelPlace);
+    const travelDate = getDate()
     console.log(travelPlace);
-    postData('/travelPlace', { travelPlace: travelPlace })
+    postData('/travelPlace', { travelPlace: travelPlace, travelDate: travelDatePicker})
         .then(function (data) {
             updateUI(data);
 
@@ -48,7 +50,8 @@ function updateUI(data) {
     
     var outStr = `The place you entered is: ${data.geonames[0].name}.\nThe country code is: ${data.geonames[0].countryCode}.\nThe country name is: ${data.geonames[0].countryName}.\nThe latitude of the place is: ${data.geonames[0].lat}\nThe longitude of the place is: ${data.geonames[0].lng}.\nThe temperature is: ${data.currentWeatherData.temp}.\nThe date of the weather forecast is: ${newDate}.`
     // alert(outStr);
-    document.querySelector('.upcoming-trip-details').textContent = outStr;
+    const date_diff = `\nYour travel date of ${travelDatePicker} is ${data.travelDaysAhead} days ahead.`
+    document.querySelector('.upcoming-trip-details').textContent = outStr + date_diff;
     const myTrips = document.getElementById('all-trips-details');
     const details = document.createElement('details');
     const summary = document.createElement('summary');
@@ -64,15 +67,14 @@ function updateUI(data) {
 }
 
 function getDate() {
-    let dateEntered = new Date()
     const datePicker = document.getElementById('travel-date');
     datePicker.addEventListener('change', function () {
         let input = this.value;
-        dateEntered = new Date(input);
+       const dateEntered = new Date(input);
         console.log(input); //e.g. 2015-11-13
-        console.log(dateEntered);
+        // console.log(dateEntered);
+        travelDatePicker = dateEntered;
     })
-    return dateEntered;
 }
 
 function removeTrip(event) {

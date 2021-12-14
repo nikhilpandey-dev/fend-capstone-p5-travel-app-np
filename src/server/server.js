@@ -78,10 +78,30 @@ function getPixabayURL(place) {
     return url;
 
 }
+
+function getDateDiff(futureDate) {
+    const date1 = new Date();
+    const date2 = new Date(futureDate);
+    console.log('Curent date is: ');
+    console.log(date1);
+    console.log('Type of date 2 is: ');
+    console.log(typeof date2);
+    console.log('Future date is: ');
+    console.log(date2);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    console.log(diffDays + " days");
+    return diffDays;
+}
+/* Main function for data exchange */
 let travelPlaceData = {};
 async function getTravelPlace(req, res) {
     console.log('The data code send by you is: ');
     console.log(req.body);
+    const fut_dat = req.body.travelDate
+    console.log(typeof fut_dat);
+    console.log("Date diff is");
+    const date_diff = getDateDiff(fut_dat);
     try {
         const travelPlace = req.body.travelPlace;
         const url = createGeonameURL(travelPlace);
@@ -90,19 +110,20 @@ async function getTravelPlace(req, res) {
         travelPlaceData = {
             details: response.data.totalResultsCount,
             geonames: response.data.geonames,
+            travelDaysAhead: date_diff
         }
-        console.log("Geonames data is:\n", travelPlaceData.geonames);
+        // console.log("Geonames data is:\n", travelPlaceData.geonames);
         const lat = travelPlaceData.geonames[0].lat;
         const lon = travelPlaceData.geonames[0].lng
         const weatherBitURL = getWeatherBitDataURL(lat, lon);
         const weatherBitResponse = await axios.get(weatherBitURL);
-        console.log("Weather bit data for the current date is: ", weatherBitResponse.data.data[0]);
+        // console.log("Weather bit data for the current date is: ", weatherBitResponse.data.data[0]);
         const date = new Date(weatherBitResponse.data.data[0].valid_date);
-        console.log("Date is:", date);
+        // console.log("Date is:", date);
         travelPlaceData['currentWeatherData'] = weatherBitResponse.data.data[0];
         let pixabayURL = getPixabayURL(travelPlace);
     let pixabayImages = await axios.get(pixabayURL);
-    console.log("Pixa bay images are: ", pixabayImages.data.hits[0]);
+    // console.log("Pixa bay images are: ", pixabayImages.data.hits[0]);
 
     if ((pixabayImages.data.hits[0] == null) || (pixabayImages.data.hits[0] == undefined)) {
         const country = travelPlaceData.geonames[0].countryName;
@@ -122,3 +143,4 @@ async function getTravelPlace(req, res) {
 }
 
 app.post('/travelPlace', getTravelPlace);
+
