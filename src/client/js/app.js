@@ -72,5 +72,14 @@ function getDate() {
     return dateEntered;
 }
 
-export { handleSubmit, postData, init, getDate }
+function removeTrip(event) {
+    event.preventDefault();
+    const removeTripButton = document.getElementById('reset');
+    const myTrips = document.getElementById('all-trips-details');
+    removeTripButton.addEventListener('click', function(){
+        myTrips.firstElementChild.remove();
+    })
+
+}
+export { handleSubmit, postData, init, getDate, removeTrip }
 
