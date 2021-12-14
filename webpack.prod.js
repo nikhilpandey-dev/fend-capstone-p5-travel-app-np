@@ -5,6 +5,9 @@ const {merge} = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
+/* Used this 
+    https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
+*/
 const {GenerateSW} = require('workbox-webpack-plugin');
 
 module.exports = merge(common, {
